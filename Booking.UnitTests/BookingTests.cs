@@ -29,6 +29,7 @@ namespace Booking.UnitTests
             _repo.Setup(p => p.GetActiveBookings(2)).Returns(new List<Booking> { _existBooking }.AsQueryable());
         }
 
+        // Booking before existing one
         [Test]
         public void StartAndFinishBeforeBooking_ReturnEmptyString()
         {
@@ -42,6 +43,7 @@ namespace Booking.UnitTests
             Assert.That(result, Is.Empty);
         }
 
+        // Booking starts before and end during existing one
         [Test]
         public void StartBeforeAndEndDuringBooking_ReturnReferenceString()
         {
@@ -55,8 +57,8 @@ namespace Booking.UnitTests
             Assert.AreEqual(result, _existBooking.Reference);
         }
 
+        //Booking starts and ends during existing one
         [Test]
-
         public void StartAndEndDuringBooking_ReturnReferenceString()
         {
             var result = BookingHelper.OverlappingBookingsExist(new Booking
@@ -70,8 +72,8 @@ namespace Booking.UnitTests
             Assert.AreEqual(result, _existBooking.Reference);
         }
 
+        //Booking starts during the existing one and end after
         [Test]
-
         public void StartDuringBookingEndAfer_ReturnReferenceString()
         {
             var result = BookingHelper.OverlappingBookingsExist(new Booking
@@ -85,8 +87,8 @@ namespace Booking.UnitTests
             Assert.AreEqual("overbooking", result);
         }
 
+        //Booking starts and end after booking
         [Test]
-
         public void StartAndEndAferBooking_ReturnEmptyString()
         {
             var result = BookingHelper.OverlappingBookingsExist(new Booking
@@ -100,9 +102,8 @@ namespace Booking.UnitTests
             Assert.That(result, Is.Empty);
         }
 
-
+        //Booking starts before and end after booking
         [Test]
-
         public void StartBeforeAndEndAferBooking_ReturnReferenceString()
         {
             var result = BookingHelper.OverlappingBookingsExist(new Booking
@@ -116,16 +117,7 @@ namespace Booking.UnitTests
             Assert.AreEqual(result, _existBooking.Reference);
         }
 
-
-
-
-
-
-        private DateTime ArivalOn(int year, int month, int day)
-        {
-            return new DateTime(year, month, day, 14, 0, 0);
-        }
-
+      
         private DateTime Before(DateTime arrivalDate, int days = 1)
         {
             return arrivalDate.AddDays(-days);
@@ -136,10 +128,6 @@ namespace Booking.UnitTests
             return dateTime.AddDays(days);
         }
 
-        private DateTime DepartOn(int year, int month, int day)
-        {
-            return new DateTime(year, month, day, 10, 0, 0);
-        }
     }
 
 
